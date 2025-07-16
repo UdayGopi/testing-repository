@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-hello-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: web
+        # The image URL matches the Kaniko destination, using the local Minikube registry.
+        # COMMIT_SHA_PLACEHOLDER will be replaced by the workflow's sed command.
+        image: $(minikube ip):5000/my-app:COMMIT_SHA_PLACEHOLDER
+        ports:
+        - containerPort: 5000
+        env:
+        - name: COMMIT_SHA
+          value: "COMMIT_SHA_PLACEHOLDER" # This will also be replaced by the workflow
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-hello-app-service
+spec:
+  selector:
+    app: hello
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: NodePort # Use NodePort to easily access it from outside the cluster for testing
