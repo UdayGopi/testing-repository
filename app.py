@@ -13,3 +13,5 @@ def hello():
 if __name__ == '__main__':
     # Run the Flask app on all available network interfaces on port 5000
     app.run(host='0.0.0.0', port=5000)
+# Ensure the Flask app is running
+print("Flask app is running! Access it at http://localhost:5000")
