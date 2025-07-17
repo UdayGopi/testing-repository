@@ -1,6 +1,7 @@
 from flask import Flask
 import os
 app = Flask(__name__)
+# Load environment variables
 @app.route('/')
 def index():
     return "Service is running!"
