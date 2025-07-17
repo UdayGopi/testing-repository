@@ -1,7 +1,7 @@
 from flask import Flask
 import os
 app = Flask(__name__)
-
+# Retrieve the commit SHA from environment variable, default to 'unknown'
 @app.route('/')
 def index():
     return "Service is running!"
